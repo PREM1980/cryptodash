@@ -3,13 +3,16 @@ import './App.css';
 import WelcomeMessage from './WelcomeMessage';
 import styled, {css} from 'styled-components';
 import AppLayout from './AppLayout';
+import AppBar from './AppBar';
 
 
 class App extends Component {
   render() {
     return (
       <AppLayout>
-        <WelcomeMessage/>
+        <AppBar>
+          <WelcomeMessage/>
+        </AppBar>
       </AppLayout>
     );
   }
