@@ -25,6 +25,7 @@ export class AppProvider extends React.Component{
     }
 
     confirmFavorites = () => {
+
         this.setState({
             firstVisit: false,
             page: 'dashboard'
@@ -37,6 +38,7 @@ export class AppProvider extends React.Component{
 
     savedSettings(){
         let cryptoDash = JSON.parse(localStorage.getItem('cryptoDash'));
+        console.log('app provider = ', cryptoDash)
         if (!cryptoDash){
             return {page: 'settings', firstVisit: true}
         }
@@ -55,3 +57,4 @@ export class AppProvider extends React.Component{
 
 }
 
+console.log('app provider')

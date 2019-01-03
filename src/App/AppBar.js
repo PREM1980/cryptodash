@@ -42,3 +42,5 @@ export default function(){
         <ControlButton name="settings"/>
     </Bar>
 }
+
+console.log('app bar')
