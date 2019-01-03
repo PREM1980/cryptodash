@@ -4,15 +4,18 @@ import WelcomeMessage from './WelcomeMessage';
 import styled, {css} from 'styled-components';
 import AppLayout from './AppLayout';
 import AppBar from './AppBar';
+import {AppProvider} from './AppProvider';
 
 
 class App extends Component {
   render() {
     return (
       <AppLayout>
-        <AppBar>
-          <WelcomeMessage/>
-        </AppBar>
+        <AppProvider>
+          <AppBar>
+            <WelcomeMessage/>
+          </AppBar>
+        </AppProvider>
       </AppLayout>
     );
   }
