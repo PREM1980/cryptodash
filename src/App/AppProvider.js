@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 export const AppContext = React.createContext();
 const cc = require('cryptocompare')
+cc.setApiKey('5018b2000069bfc32bccd25865105b9b6890e60c852b1c2f1b62169a787b64b9')
 const MAX_FAVORITES = 10;
 
 export class AppProvider extends React.Component{
@@ -11,7 +12,7 @@ export class AppProvider extends React.Component{
         this.state = {
             page: 'dashboard',
             ...this.savedSettings(),
-            favorites: ['BTC','ETH','XMR','DOGE'],
+            favorites: ['BTC','ETH','XMR'],
             setPage: this.setPage,
             addCoin: this.addCoin,
             removeCoin: this.removeCoin,
@@ -23,7 +24,6 @@ export class AppProvider extends React.Component{
 
     componentDidMount = () => {
         this.fetchCoins();
-
         this.fetchPrices();
     }
 
@@ -37,12 +37,14 @@ export class AppProvider extends React.Component{
         if (this.state.firstVisit) return;
         let prices = await this.prices();
         this.setState({prices});
+        console.log('prices = ', prices)
     }
 
     prices = async() =>{
         let returnData = [];
         for (let i=0; i < this.state.favorites.length; i++){
             try{
+                console.log("Get price data for  = > " + this.state.favorites[i])
                 let priceData = await cc.priceFull(this.state.favorites[i], 'USD')
                 returnData.push(priceData)
             }
