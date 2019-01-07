@@ -16,8 +16,9 @@ export class AppProvider extends React.Component{
             setPage: this.setPage,
             addCoin: this.addCoin,
             removeCoin: this.removeCoin,
-            isInFavorites: this.isInFavorites,
+            isInFavorites: this.isInFavorites,            
             confirmFavorites: this.confirmFavorites,
+            setCurrentFavorite: this.setCurrentFavorite,
             setFilteredCoins: this.setFilteredCoins
         }
     }
@@ -71,26 +72,39 @@ export class AppProvider extends React.Component{
     isInFavorites = key => _.includes(this.state.favorites, key)
 
     confirmFavorites = () => {
+        let currentFavorite = this.state.favorites[0];
 
         this.setState({
             firstVisit: false,
-            page: 'dashboard'
+            page: 'dashboard',
+            currentFavorite
         }, ()=>{
             this.fetchPrices();
         })
         localStorage.setItem('cryptoDash', JSON.stringify({
-            favorites: this.state.favorites
+            favorites: this.state.favorites,
+            currentFavorite
         }))
     }
 
+    setCurrentFavorite = (sym) => {
+        this.setState({
+            currentFavorite: sym
+        })
+        localStorage.setItem('cryptoDash', JSON.stringify({
+            ...JSON.parse(localStorage.getItem('cryptoDash')),
+            currentFavorite: sym
+        })
+        )
+    }
     savedSettings(){
         let cryptoDashData = JSON.parse(localStorage.getItem('cryptoDash'));
         console.log('app provider = ', cryptoDashData)
         if (!cryptoDashData){
             return {page: 'settings', firstVisit: true}
         }
-        let {favorites} = cryptoDashData;
-        return {favorites};
+        let {favorites, currentFavorite} = cryptoDashData;
+        return {favorites, currentFavorite};
         
     }
     
